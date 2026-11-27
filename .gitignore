@@ -1,0 +1,15 @@
+# Build-Ergebnisse
+__pycache__/
+*.o
+*.lst
+*.lbl
+*.map
+src/lk_*.cfg
+src/a[1-5]_[A-F].bin
+src/fx[a-e]_[A-F].bin
+src/GSOS95.S16
+# Bildschirmfotos der Tests
+src/*.png
+.DS_Store
+_to_delete/
+testimages/

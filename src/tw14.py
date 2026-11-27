@@ -1,0 +1,18 @@
+# Darstellung: textfiles.com-Kopf (zwei Tabellen hintereinander, lange Zelle)
+exec(open('tw1.py').read().split("# 1) Schnellstart")[0])
+d = open('testpages/textfiles_head.html', 'rb').read()
+net.pages[('10.1.1.1', 80, '/tf')] = b'HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n' + d
+click(101, 193)
+typ('frogfind.com/tf'); key(0x0D)
+settle()
+L = lines()
+for l in L[:12]: print(repr(l))
+check(any('If you enjoy textfiles.com' in l for l in L), 'Anfang der langen Zelle sichtbar')
+check(not any(l.lstrip('<|').startswith('eet') for l in L), 'kein abgeschnittenes Wort')
+render(cpu, 'tw14a.png', 3)
+print('ALLES OK' if ok else 'FEHLER')
+b = bank(); n = w('NLINES')
+for k in range(n):
+    o = cpu.rd16(b + WB_LIN + 6 * k)
+    e = cpu.rd16(b + WB_LIN + 6 * (k + 1)) if k + 1 < n else w('TXTEND')
+    print(k, hex(o), [hex(x) for x in cpu.mem[b + o:b + min(e, o + 40)]][:40], [hex(cpu.rd16(b + WB_LIN + 6 * k + j)) for j in (2, 4)])

@@ -1,0 +1,853 @@
+GS/OS95 v2.17.0 - Festplatten-Images fuer den Apple IIgs
+======================================================
+
+GSOS95_System.hdv  32 MB, bootfaehig: GS/OS 6.0.4 mit GS/OS95 als Oberflaeche
+GSOS95_Games.hdv   Volume GAMES mit der Spielesammlung
+
+Einhaengen: System in Laufwerk 7/1 (Startlaufwerk), Games in 7/2.
+
+Neu in v2.0
+- Zubehoer: Start > Zubehoer listet alle Schreibtischzubehoere (NDAs) aus
+  *:System:Desk.Accs; ein Klick oeffnet sie. Kontrollfelder (CDevs) ueber
+  das Zubehoer "Control Panels". Auf echtem GS/OS 6.0.4 getestet.
+- Ziehen und Ablegen mit der Maus: Dateien/Ordner auf einen Ordner, in ein
+  anderes Fenster, auf ein Laufwerk im Arbeitsplatz oder auf den Papierkorb
+  ziehen. Gleiches Laufwerk = verschieben, anderes Laufwerk = kopieren.
+- Datentraeger: im Arbeitsplatz umbenennen (Strg+E) und loeschen
+  (Datei > Datentraeger loeschen..., Strg+D). Unformatierte Disketten
+  erscheinen im Arbeitsplatz; Doppelklick initialisiert sie (ProDOS).
+  Das Startlaufwerk ist geschuetzt.
+- Eigene Symbole fuer Text, Bild, AppleWorks, Zeichensatz, Klang, NDA/CDA,
+  Kontrollfeld, Systemerweiterung, Treiber, BASIC, Binaerdatei.
+  Der Typ steht im Klartext unter Eigenschaften.
+- Gepackte Bilder ($C0/0001) oeffnen sich per Doppelklick.
+- Programm in zwei Segmente aufgeteilt (Code + Grafik), dadurch viel Platz
+  fuer weitere Funktionen.
+- Der Apple-Finder ist weiter ueber Start > Einstellungen > "Finder starten"
+  erreichbar.
+
+v2.1 (Korrektur)
+- Absturz beim Oeffnen von "Zubehoer" behoben (Namenskopie lief im
+  8-Bit-Modus ueber und ueberschrieb Programmcode).
+- Farben auf Apples Standardpalette umgestellt, damit NDAs und GS/OS95
+  gleichzeitig richtig aussehen.
+- Eigener 16-KB-Stack; Toolbox-Aufrufe laufen mit eigener Direct Page.
+
+v2.2
+- NDA-Fenster erscheinen vollstaendig (Rahmen, Titel, Hintergrund) ueber
+  dem GS/OS95-Schreibtisch und lassen sich verschieben und schliessen.
+- Menuebefehle per Mausklick funktionieren wieder (Ausschneiden, Einfuegen,
+  Neuer Ordner, Umbenennen ... loesten vorher die falsche Aktion aus).
+- Verstaendliche Meldungen: Name existiert bereits, Datentraeger voll,
+  schreibgeschuetzt.
+- Laufwerksnamen ohne fuehrenden Punkt; Symbole fuer Symboldateien und
+  Finder-Daten.
+
+Wichtig fuer Emulatoren: das Image nicht von aussen veraendern, waehrend
+es eingehaengt ist und das System laeuft - sonst kann das Dateisystem
+beschaedigt werden.
+
+v2.3 - Finder-Ersatz komplett(er)
+- Programmsymbole wie im Apple-Finder: Symboldateien ($CA) aus *:Icons
+  werden gelesen (Name mit Platzhalter *, Dateityp, Zusatztyp).
+- Dokumente mit ihrem Programm oeffnen: Doppelklick startet das in der
+  Symboldatei eingetragene Programm und uebergibt das Dokument per
+  Message Center (wie der Apple-Finder). Das Programm wird notfalls auf
+  allen Laufwerken gesucht (Wurzel + erste Ordnerebene).
+- Datei > Drucken: Dokument an sein Programm zum Drucken uebergeben.
+- Ansicht > Details: Liste mit Name, Groesse (KB) und Typ.
+  Ansicht > Nach Name/Groesse/Typ ordnen (Ordner immer zuerst).
+  Ansicht und Sortierung werden gespeichert.
+- Mehrfachauswahl: Shift- oder Apfel-Klick, Strg+A = alles. Loeschen,
+  Ausschneiden/Kopieren/Einfuegen und Ziehen wirken auf alle markierten
+  Objekte (Zwischenablage und Ziehen: bis zu 16 auf einmal).
+- Ordner mit bis zu 128 Eintraegen (vorher 96); "+" in der Statuszeile,
+  wenn es mehr gibt. Lange Namen werden mit "..." gekuerzt.
+- Datei > Duplizieren (KOPIE.Name), Datei > Suchen... / Weitersuchen
+  (durchsucht den Ordner samt Unterordnern bzw. das Startlaufwerk).
+- Eigenschaften: Kaestchen "Schreibgeschuetzt" (sperren/entsperren).
+- Offene Ordnerfenster werden beim Programmstart, Neustart und
+  Herunterfahren gemerkt und beim naechsten Start wieder geoeffnet.
+- Papierkorb-Ordner RECYCLED wird in der Laufwerkswurzel ausgeblendet.
+
+
+v2.4 - Ohne Umweg ueber den Apple-Finder
+- Schnelleres Bild: Beim Ordnerwechsel wird nur noch der Fensterinhalt
+  neu gezeichnet, beim Verschieben/Schliessen eines Fensters nur der
+  freigelegte Bereich.
+- Ordner mit bis zu 400 Eintraegen (eigene Speicherbank), schnelleres
+  Sortieren.
+- Start > Einstellungen ist jetzt eine eigene Systemsteuerung im
+  Win95-Stil (kein Sprung mehr in den Finder):
+  Anzeige (Desktop- und Randfarbe), Maus (Doppelklick-Tempo, schnelle
+  Maus), Datum/Uhrzeit (stellt die Systemuhr), Ton (Lautstaerke,
+  Tonhoehe), Sprache, "Weitere..." oeffnet Apples Kontrollfelder fuer
+  Kontrollfelder von Drittanbietern. Werte stehen im Battery-RAM.
+  Bedienung auch mit Pfeiltasten, Eingabe und Escape.
+- Zubehoer: Fenster von Schreibtischzubehoer bekommen eine blaue
+  Titelleiste mit weisser Schrift wie die eigenen Fenster. Die Liste
+  laesst sich mit Pfeiltasten und Eingabe bedienen.
+- BASIC-Programme per Doppelklick starten (ueber BASIC.SYSTEM auf dem
+  Startlaufwerk; Pfad hoechstens 64 Zeichen).
+- Datentraeger kopieren: im Arbeitsplatz Laufwerk kopieren, anderes
+  Laufwerk markieren, Einfuegen. Nach Rueckfrage wird blockweise
+  kopiert (beide gleich gross), Fortschritt in Prozent.
+- Neu eingelegte, unlesbare Disketten werden erkannt (3,5"/Festplatte,
+  nicht 5,25") und zum Formatieren angeboten.
+- Eigenschaften: Dateityp und Zusatztyp aendern (hexadezimal).
+
+Weiterhin nicht moeglich: Finder-Erweiterungen von Drittanbietern.
+Der Inhalt von Apples Zubehoer (z. B. Kontrollfelder) bleibt in Apples
+eigenem Aussehen, nur der Fensterrahmen wird umgefaerbt.
+
+v2.5 - Fenster, Startmenue, Komfort
+- Ordnerfenster in der Groesse aenderbar: Griff unten rechts ziehen.
+  Maximieren-Knopf neben dem X oder Doppelklick auf die Titelleiste.
+  Bildlaufleiste statt Seitenknoepfen (Pfeile, Spur, Schieber ziehen).
+  Groesse und Lage werden mit den Fenstern gemerkt.
+- Bis zu 6 Ordnerfenster gleichzeitig (vorher 3). Die Taskleiste macht
+  die Knoepfe schmaler und zeigt auch offene Zubehoer-Fenster an
+  (Klick holt das Zubehoer nach vorn). Apfel+Tab wechselt das Fenster.
+- Kopieren/Verschieben (Einfuegen, Ziehen) mit Fortschrittsfenster:
+  Dateiname, Balken, "n von m" und "Abbrechen" (auch Escape oder
+  Apfel+Punkt). Eine halb kopierte Datei wird dabei entfernt.
+- Kontextmenue mit Wahltaste-Klick (Option) auf ein Objekt (Oeffnen,
+  Ausschneiden, Kopieren, Loeschen, Umbenennen, Eigenschaften, Auf den
+  Desktop, Ins Startmenue) oder auf eine freie Flaeche (Einfuegen, Neuer
+  Ordner, Aktualisieren, Ansicht).
+- Verknuepfungen auf dem Desktop (bis zu 6): Kontextmenue "Auf den
+  Desktop". Doppelklick oeffnet Ordner bzw. Datei, Entf entfernt die
+  markierte Verknuepfung (die Datei selbst bleibt).
+- Startmenue: "Programme" ist ein Untermenue mit selbst gewaehlten
+  Programmen (Kontextmenue "Ins Startmenue", nochmal = entfernen) und
+  "Arbeitsplatz". Neu "Dokumente" mit den 8 zuletzt geoeffneten Dateien.
+  Untermenues auch mit Pfeil rechts/links bedienbar.
+- Startklang (kurzer Dreiklang) nach dem Einschalten; abschaltbar unter
+  Einstellungen > Ton.
+- Bildschirmschoner (Sternenfeld) nach 1-15 Minuten ohne Eingabe;
+  einstellen unter Einstellungen > Anzeige (0 = aus, Vorgabe aus).
+- Schneller: Text, Symbole und Rahmenlinien werden ueber eigene schnelle
+  Wege gezeichnet (Fenster neu zeichnen ca. ein Drittel schneller).
+- Programmdatei > 128 KB: wird als ProDOS-"Tree"-Datei gespeichert.
+
+Weiterhin: Zubehoer-Fenster (Apple-NDAs) behalten Apples Rahmenform
+(Schliessfeld links), nur Titelleiste/Schrift sind umgefaerbt.
+
+v2.5.1 - Neues Bootbild
+- Schon beim Laden von GS/OS erscheint das grosse GS/OS95-Startbild
+  (Farbverlauf, Logo, "Apple IIgs Edition") statt des Kastens von
+  System 6.0.4. Der GS/OS-Ladebalken laeuft im GS/OS95-Balken unten mit.
+  (Geaendert ist nur SYSTEM:START.GS.OS; Original-Datei: siehe Images
+  aelterer Versionen.)
+- Haelt man beim Start Shift fuer "ohne Erweiterungen", erscheint der
+  Hinweis "No Inits/DAs" in falschen Farben - sonst keine Aenderung.
+
+v2.5.2 - Zubehoer repariert, Win95-Rahmen
+- Behoben: Seit v2.5 blieb GS/OS95 beim Oeffnen eines Zubehoers
+  (Start > Zubehoer, z.B. Control Panels) haengen bzw. baute den
+  Bildschirm endlos neu auf. Ursache war die neue Zubehoer-Schaltflaeche
+  in der Taskleiste (Fensterliste wurde aus der Zeichenroutine des
+  Window Managers heraus abgefragt).
+- Zubehoer-Fenster haben jetzt einen Win95-Rahmen: X-Knopf rechts in
+  der Titelleiste, Apples Schliessfeld links und das Zoomfeld entfallen.
+  (Nur beim aktiven Fenster; inaktive zeigen die blanke Titelleiste.)
+- Die Taskleiste zeigt den Namen des Zubehoers (z.B. "Control Panels").
+
+v2.5.3 - Startbild
+- Schriftzug "GS/OS 95" mit Abstand zwischen den Buchstaben (besser lesbar),
+  darunter "Created by Marc Golombeck". Der Name steht auch im Info-Fenster.
+- Der Ladebalken laeuft doppelt so schnell und fuellt sich in Bloecken.
+- Kein zweites, anderes Titelbild mehr: GS/OS95 zeigt beim Start dasselbe
+  Bild wie der Bootvorgang, der Balken laeuft an derselben Stelle weiter
+  bis zum Ende, danach erscheint direkt der Schreibtisch.
+  (Wird beim Start ein Fenster einer Diskette wiederhergestellt, steht der
+  Balken waehrend des Diskettenzugriffs kurz vor dem Ende.)
+
+v2.5.4 - Zubehoer-Fenster, Papierkorb
+- Zubehoer-Fenster (z.B. Control Panels): Die Titelleiste ist jetzt wie
+  bei GS/OS95-Fenstern gezeichnet (Name links in der GS/OS95-Schrift,
+  X-Knopf rechts).
+- Der X-Knopf schliesst das Zubehoer jetzt wirklich; GS/OS95 verfolgt den
+  Klick selbst. Zusaetzlich schliesst die Taste Esc das vorderste Zubehoer.
+- Papierkorb: "Wiederherstellen" (Menue Datei, Kontextmenue oder Strg+E)
+  legt markierte Eintraege an ihren alten Platz zurueck. Die Herkunft
+  wird in *:System:GSOS95.BIN gemerkt (bis zu 8 Eintraege); ist sie
+  unbekannt, landet der Eintrag im Hauptverzeichnis des Startvolumes.
+- Info-Fenster: "Erstellt von Marc Golombeck."
+Weiterhin im Apple-Stil: der Inhalt der Zubehoer-Fenster (Knoepfe,
+Rollbalken) - den zeichnet das jeweilige Zubehoer selbst.
+
+v2.5.5 - Absturz/Mauszeiger bei Zubehoer, Schnellstart, Bootbild
+- Zubehoer-Fenster: Der Klick auf den X-Knopf schliesst jetzt sofort (auf
+  demselben Weg wie Esc); vorher wird der Mauszeiger entfernt, damit kein
+  Rest stehen bleibt.
+- Zubehoer-Fenster, deren Titelleiste teilweise aus dem Bildschirm ragt,
+  werden nicht mehr von GS/OS95 uebermalt (dabei konnte neben den
+  Bildschirm geschrieben werden - moegliche Absturzursache). Solche
+  Fenster zeigen so lange Apples Rahmen.
+- Schnellstart neben dem Start-Knopf: Arbeitsplatz, Einstellungen,
+  Ausfuehren.
+- Bootbild: Die Symbole, die Systemerweiterungen beim Laden unten links
+  zeichnen, sind nicht mehr zu sehen.
+
+v2.5.6 - WICHTIG: Absturz und Mauszeiger-Reste behoben
+- v2.5.3 bis v2.5.5 uebergaben QuickDraw beim Start eine falsche
+  Arbeitsadresse (Direct Page $000D statt des reservierten Speichers).
+  QuickDraw ueberschrieb dadurch Stapel und Systemspeicher in Bank 0:
+  Mauszeiger-Reste auf dem Bildschirm, Absturz in den Monitor (D=010D).
+  Bitte diese Versionen nicht mehr benutzen.
+
+v2.5.7 - Ordnerbaum
+- Explorer-Fenster zeigen in der Symbolansicht links einen Ordnerbaum:
+  Arbeitsplatz, darunter der Pfad zum aktuellen Ordner (markiert) und
+  dessen Unterordner bzw. im Arbeitsplatz die Laufwerke. Ein Klick
+  wechselt dorthin.
+- Ein/aus ueber Ansicht > Ordnerbaum (wird gemerkt). Nicht in der
+  Detailansicht, nicht im Papierkorb und nicht in sehr schmalen Fenstern.
+- Nachbarordner der uebergeordneten Ebenen werden nicht angezeigt (dafuer
+  muessten weitere Verzeichnisse gelesen werden).
+
+v2.5.8 - Minesweeper, Uhr
+- Minesweeper: viertes Symbol in der Schnellstartleiste. 9x9 Felder,
+  10 Minen, der erste Klick trifft nie eine Mine, leere Bereiche decken
+  sich selbst auf. Wahltaste (oder Apfel) + Klick setzt eine Fahne,
+  "Neu" beginnt ein neues Spiel, Esc schliesst das Fenster.
+- Ein Klick auf die Uhr in der Taskleiste oeffnet Datum/Uhrzeit.
+- Papierkorb merkt sich jetzt die Herkunft der letzten 16
+  geloeschten Eintraege.
+
+v2.6.0 - Minimieren, schnellerer Start
+- Fenster minimieren: dritter Knopf in der Titelleiste von Ordnerfenstern.
+  Das Fenster bleibt in der Taskleiste; ein Klick auf seinen Knopf holt es
+  zurueck. Ein Klick auf den Knopf des aktiven Fensters minimiert es.
+- Start: Der Schreibtisch erscheint, bevor die Fenster vom letzten Mal
+  wiederhergestellt werden (das Abfragen leerer 5,25"-Laufwerke dauert).
+- Minesweeper zeigt rechts die Zahl der Minen minus gesetzte Fahnen.
+- Mehr Platz fuer kuenftige Erweiterungen (Programmaufbau); der Papierkorb
+  merkt sich wieder 16 Eintraege.
+- Info-Fenster: Version 2.6. Englische Anleitung: README_EN.txt.
+
+v2.6.1 - Feinschliff
+- Desktop anzeigen: fuenftes Symbol der Schnellstartleiste minimiert alle
+  Ordnerfenster; ein zweiter Klick holt sie zurueck.
+- Hintergrundmuster: Einstellungen > Anzeige > Muster (0 = keins,
+  1 Punkte, 2 Karo, 3 Schraeg, 4 Ziegel). Wird gemerkt.
+- Eigenschaften: Bei Textdateien zeigt ein Feld den Anfang der Datei.
+- Ordnerbaum: auch in der Detailansicht (wenn das Fenster breit genug
+  ist, z.B. maximiert); lange Namen enden mit "..", die Markierung ist
+  nur so breit wie der Name.
+- Menue Ansicht: Punkt vor der aktiven Ansicht/Sortierung, Haken vor
+  "Ordnerbaum".
+- Minesweeper wie unter Windows 95: Smiley-Knopf (neues Spiel), rote
+  Anzeigen fuer Minen und Sekunden, erhabene Felder, runde Minen, nur die
+  getroffene Mine rot, Bestzeit wird gespeichert.
+- Zubehoer: Tasten gehen an das zuletzt angeklickte Zubehoer-Fenster
+  (z.B. Ziffern in den Rechner). Esc schliesst es weiterhin, Apfel-
+  Kuerzel bleiben bei GS/OS95. Ein Klick auf GS/OS95 holt die Tasten
+  zurueck.
+- Inaktive Zubehoer-Fenster bekommen eine graue Win95-Titelleiste (wenn
+  kein anderes Zubehoer-Fenster davor liegt).
+- Beenden-Dialog: "Zum GS/OS-Modus wechseln" statt "Zum GS/OS-Finder".
+
+v2.6.2 - Zubehoer, Ordnerbaum, Bildvorschau
+- Mauszeiger ueber Schreibtischzubehoer: Dort erscheint der normale
+  Pfeil des Systems, ohne Reste oder Flackern.
+- Apfel+Z/X/C/V (Widerrufen, Ausschneiden, Kopieren, Einsetzen) wirken
+  im zuletzt angeklickten Zubehoer-Fenster. Pfeiltasten und andere
+  Tasten gehen dann ebenfalls nur an das Zubehoer.
+- Minesweeper ist ein eigenes Fenster mit Knopf in der Taskleiste und
+  einem Minimieren-Knopf.
+- Ordnerbaum zeigt auch die Geschwisterordner auf jeder Ebene und die
+  anderen Laufwerke unter "Arbeitsplatz"; ein Klick wechselt dorthin.
+  Die Laufwerke bleiben auch bei mehreren offenen Fenstern sichtbar.
+- Getestet im Emulator GSSquared.
+- Eigenschaften: Bei Super-Hi-Res-Bildern ($C1, 32 KB) erscheint eine
+  farbige Miniatur des Bildes.
+
+v2.6.3 - Schneller Start, Fokus bei Zubehoer
+- Start: 5,25"-Laufwerke werden nicht mehr abgefragt (ohne Diskette
+  dauerte das fast eine Minute). Sie erscheinen als "5,25-Zoll-Laufwerk";
+  erst beim Oeffnen wird die Diskette gelesen ("Bitte warten..."), danach
+  steht ihr Name da. Ohne Diskette kommt eine kurze Meldung.
+- Fenster vom letzten Mal auf einem Laufwerk, das nicht mehr da ist,
+  werden nicht mehr gesucht (das liess GS/OS alle Laufwerke abfragen).
+- Ein neu geoeffnetes Zubehoer bekommt sofort die Tastatur. Solange es
+  den Fokus hat, ist die Titelleiste der GS/OS95-Fenster grau und sein
+  Knopf in der Taskleiste gedrueckt; ein Klick in ein GS/OS95-Fenster
+  macht dieses wieder aktiv.
+- Arbeitsplatz zeigt den Ordnerbaum auch beim ersten Oeffnen.
+- Eigenschaften eines leeren oder 5,25"-Laufwerks erscheinen sofort.
+
+v2.6.4 - Bilder und mehr Platz fuer Neues
+- Bildbetrachter: Doppelklick (oder Eingabe) zeigt neben $C1-Bildern und
+  PackBytes-Bildern ($C0/0001) jetzt auch Bilder im Apple Preferred
+  Format ($C0/0002) bildschirmfuellend an, mit eigenen Paletten je Zeile.
+  Eine Taste oder ein Klick fuehrt zurueck.
+- Eigenschaften: farbige Miniatur auch fuer gepackte und APF-Bilder.
+- Deutlich schneller: Rechnen (Multiplizieren/Teilen) im ganzen Programm
+  braucht nur noch einen Bruchteil der Zeit, z.B. die Bildminiatur
+  (vorher ca. 15 Sekunden, jetzt ca. 2).
+- Programmaufbau: Ein dritter Speicherbereich nimmt Einstellungen,
+  Symbolverwaltung, Dokumente, Verknuepfungen, Untermenues und weitere
+  Teile auf. Im Hauptbereich sind dadurch wieder rund 9 KB frei.
+
+v2.7.0 - Win95-Titelleisten fuer alle Programme (Systemzusatz)
+- Neuer Systemzusatz GSOS95.INIT in *:System:System.Setup. Er wird beim
+  Start von GS/OS geladen und bleibt aktiv, auch nach "In den GS/OS-Modus
+  wechseln" und in anderen Programmen. Jedes Fenster mit Titelleiste
+  bekommt den Win95-Stil: Titel links, Maximieren- und X-Knopf rechts,
+  inaktive Fenster grau (bei nur 4 Farben weiss mit schwarzem Titel).
+- Getestet im Apple-Finder (640er Modus): Oeffnen, Schliessen mit X,
+  Maximieren, Ziehen am Titel, mehrere Fenster, Fenster mit Infozeile.
+  In GS/OS95 bekommen Schreibtischzubehoere dieselbe Leiste.
+- Die Farben werden aus der aktuellen Palette gewaehlt (320er und 640er
+  Modus). Mit der 4-Farben-Palette des Finders ist die Leiste schwarz.
+- Technik: Der Zusatz leitet den Tool-Dispatcher um, setzt nach NewWindow
+  eine eigene Rahmenprozedur ein, laesst Apples Rahmen zeichnen und
+  uebermalt danach die Titelleiste mit QuickDraw II - im Port des Window
+  Managers, mit dessen Ursprung und eigenem Clipping (verdeckte Fenster
+  bleiben unberuehrt). Ein neues Fenster wird sofort im neuen Stil
+  nachgezeichnet.
+- Abschalten: Datei aus System.Setup entfernen und neu starten.
+- Noch im Apple-Stil: Knoepfe, Rollbalken, Menues und die Oeffnen/
+  Sichern-Dialoge anderer Programme. Explorer-artige Oeffnen/Sichern-
+  Dialoge sind der naechste Schritt.
+
+v2.8.0 - Oeffnen- und Sichern-Dialoge im Explorer-Stil
+- GSOS95.INIT ersetzt jetzt auch die Standard-Dialoge zum Oeffnen und
+  Sichern (Standard File: SFGetFile2/SFPutFile2 und die aelteren
+  SFGetFile/SFPutFile) - fuer alle Programme, die sie benutzen.
+- Aufbau wie bei Windows 95: "Suchen in" mit Knopf "Eine Ebene hoeher",
+  Liste mit Ordnern zuerst (alphabetisch, ohne Gross/Klein), Feld
+  "Dateiname", Knoepfe Oeffnen/Speichern und Abbrechen. Beim Sichern
+  gibt es "Neuer Ordner" und die Frage "Datei ersetzen?".
+- Ein Klick auf das Feld "Suchen in" zeigt alle Laufwerke (Arbeitsplatz).
+  5,25"-Laufwerke werden dort nicht abgefragt (ohne Diskette langsam).
+- Bedienung: Doppelklick oeffnet, Pfeiltasten waehlen, Eingabe bestaetigt,
+  Esc oder Apfel-Punkt bricht ab, Apfel-Hoch geht eine Ebene hoeher, ein
+  Buchstabe springt zum naechsten passenden Eintrag. Beim Sichern ersetzt
+  die erste Taste den markierten Vorgabenamen.
+- Typlisten und Filterprozeduren der Programme werden beachtet; der zuletzt
+  benutzte Ordner (Prefix 8) wird gesetzt wie bei Apple.
+- Sprache wie in GS/OS95 eingestellt (Deutsch/Englisch).
+- Mit gedrueckter Option-Taste beim Aufruf erscheint Apples Originaldialog.
+  Programme mit eigenen, angepassten Dialogen (z.B. ShrinkIt) behalten
+  Apples Dialog.
+- 320er und 640er Modus; bei nur 4 Farben (z.B. Finder-Palette) mit
+  schwarzen Rahmen statt 3D-Kanten.
+- Getestet im Emulator mit einem Testprogramm: Oeffnen, Ordnerwechsel,
+  Laufwerke, Sichern in neuem Ordner, Ersetzen-Abfrage, Abbrechen.
+
+v2.9.0 - Knoepfe im Win95-Stil
+- GSOS95.INIT zeichnet die Standardknoepfe aller Programme im Win95-Stil:
+  graue Flaeche mit 3D-Kante, der Standardknopf (Eingabetaste) mit
+  schwarzem Rahmen, gedrueckt vertieft, inaktiv mit grauer Schrift.
+  Bei nur 4 Farben (Finder-Palette) einfache schwarze Rahmen.
+- Gilt auch fuer Apples eigene Dialoge (z.B. Standard File in ShrinkIt):
+  Bevor ein Dialog laeuft (ModalDialog) bzw. bei jedem GetNextEvent werden
+  neue Knoepfe im vordersten Fenster umgestellt.
+- Nur das Zeichnen ist neu: Treffertest, Tastenkuerzel und alles andere
+  erledigt weiter Apples Originalroutine (CallCtlDefProc). Getestet mit
+  ShrinkIt: Disks, Select All, Accept, Cancel.
+- Optionsfelder, Rollbalken und Menues anderer Programme sehen noch nach
+  Apple aus.
+
+v2.9.1 - Laufwerke auf dem Desktop (Einstellung)
+- Neu unter Einstellungen > Anzeige: "Laufwerke zeigen". Eingeschaltet
+  erscheinen alle Laufwerke rechts auf dem Desktop (wie beim Mac; bei
+  Windows 95 lagen sie im Arbeitsplatz, deshalb ist die Einstellung
+  zunaechst aus). Bis zu 5 Laufwerke.
+- Doppelklick oeffnet das Laufwerk im Explorer, ein leeres oder
+  unformatiertes Laufwerk oeffnet den Arbeitsplatz. Eingabe oeffnet das
+  gewaehlte Laufwerk.
+- Eine neu eingelegte 3,5"-Diskette erscheint von selbst (Disk-Ereignis).
+- 5,25"-Laufwerke werden nicht abgefragt (ohne Diskette sehr langsam) und
+  heissen "5,25" A" / "5,25" B". Lange Namen werden mit ".." gekuerzt.
+- Die Einstellung wird in GSOS95.PREFS gespeichert.
+
+v2.9.2 - Ankreuzfelder im Win95-Stil
+- Ankreuzfelder (Check Boxes) aller Programme: weisses, eingesenktes
+  Kaestchen mit schwarzem Haken statt Apples Kreuz; inaktiv grau.
+  Bei nur 4 Farben ein einfacher schwarzer Rahmen.
+- Klicken, Umschalten und Tastenkuerzel erledigt weiter Apples
+  Originalroutine; nach einem neuen Wert zeichnet GS/OS95 das Feld sofort
+  wieder im Win95-Stil. Getestet mit ShrinkIt ("Use Compression",
+  "Delete after archiving").
+
+v2.9.3 - Stabilitaet (GSOS95.INIT)
+- Das Modul prueft vor dem Umstellen der Knoepfe, ob der Window Manager
+  laeuft. Vorher konnte es bei Programmen ohne Fenster bzw. beim Start
+  oder Beenden eines Programms an eine zufaellige Speicherstelle schreiben.
+- Der Arbeitsspeicher des Moduls wird beim Start geleert (echte Hardware
+  liefert anders als Emulatoren keinen leeren Speicher).
+
+v2.9.4 - ProDOS-8-Programme starten wieder (Fehler $0201)
+- GSOS95.INIT belegte dauerhaft einen gesperrten Block in Bank 0. ProDOS-8-
+  Programme (Typ SYS) brauchen Bank 0 aber komplett frei, GS/OS meldete
+  dann "system error $0201". Der Block ist jetzt loeschbar: GS/OS entfernt
+  ihn vor einem ProDOS-8-Programm, das Modul legt ihn danach von selbst
+  neu an.
+- Das Modul selbst wird nicht mehr in den Spezialspeicher (Bank 0/1)
+  geladen.
+- Hinweis AppleSqueezer: Mit freigegebenen 13 MB kam es zu Abstuerzen im
+  3,5"-Diskettentreiber von GS/OS (unabhaengig von GS/OS95). Mit 8 MB
+  laeuft es stabil.
+
+v2.10.0 - Internet: Uthernet II, CoGS und Browser
+- Netzwerkkarte Uthernet II (WIZnet W5100) wird direkt angesprochen, ohne
+  Marinetti. Der W5100 erledigt TCP/IP selbst; GS/OS95 holt die Adresse
+  per DHCP, fragt Namen per DNS ab und baut TCP-Verbindungen auf.
+- Einstellungen > Netzwerk (neues Symbol in der Systemsteuerung): Slot der
+  Karte (Vorgabe 3), "Adresse automatisch (DHCP)" oder feste Adressen fuer
+  IP, Subnetzmaske, Gateway und DNS-Server. "Testen" startet die Karte und
+  fragt den Namensdienst (frogfind.com). Gespeichert wird in
+  *:System:GSOS95.NET. Klappt DHCP nicht, gelten die festen Adressen.
+- Netzwerkkarte CoGS wird ebenfalls direkt unterstuetzt (Register ab
+  $C080+n*16, Kennung $A2). GS/OS95 sucht zuerst eine CoGS, dann eine
+  Uthernet II. Die CoGS bringt WLAN/Kabel, DHCP, DNS und TLS selbst mit;
+  der Netzwerk-Dialog zeigt dann Adresse und Verbindungsart an.
+- Marinetti wird fuer diese beiden Karten nicht gebraucht. Es waere nur
+  fuer andere Hardware sinnvoll (Uthernet I, LANceGS, SLIP/PPP).
+- Browser "Internet": Globus in der Schnellstartleiste oder
+  Start > Programme > Internet. Eigenes Fenster mit Taskleisten-Knopf,
+  verschieben, Groesse aendern, maximieren, minimieren.
+  - Adresszeile: Adresse (z.B. frogfind.com) oder ein Suchbegriff (dann
+    sucht FrogFind). Links daneben Zurueck (Pfeil) und Startseite (Haus),
+    rechts Neu laden, Favorit merken (Stern), Favoriten (Liste) und
+    Speichern (Diskette).
+  - HTTP/1.0 mit Weiterleitungen und "chunked"-Uebertragung. Seiten
+    beliebiger Groesse werden stueckweise gelesen; angezeigt werden bis
+    16 KB Text je Seite.
+  - Darstellung: Ueberschriften fett, Absaetze, Listen (auch nummeriert),
+    Zitate eingerueckt, Tabellen mit ausgemessenen Spalten (bis 8 Spalten,
+    16 Tabellen je Seite; zu breite Tabellen mit Tabstopps alle 40 Punkte),
+    <pre>, Trennlinien. Umlaute aus UTF-8, Latin-1 und Windows-1252,
+    HTML-Entitaeten. Skripte und Stilangaben werden ausgeblendet.
+  - Links blau unterstrichen, ein Klick folgt ihnen (auch relative Adressen
+    mit ./ und ../). Seitentitel in Titelleiste und Taskleiste.
+  - Bilder: GIFs in der Seite (bis 8 je Seite) werden nach dem Text geholt
+    und erscheinen an ihrer Stelle (hoechstens 120 Punkte hoch, auf die 16
+    Schreibtischfarben abgebildet); Esc ueberspringt sie. Ein Klick auf ein
+    Bild zeigt es gross, ein Bild in einem Link folgt dem Link. Andere
+    Bildformate erscheinen als [Alt-Text].
+  - Formulare: Textfelder, versteckte Felder, Ankreuzfelder, Knoepfe,
+    Auswahllisten (<select>; ein Klick schaltet zur naechsten Wahl) und
+    <textarea> (als einzeiliges Feld). Feld anklicken, tippen (Loeschen mit
+    Delete), Return oder Knopf schickt ab (GET und POST, Umlaute als
+    UTF-8). Esc verlaesst das Feld.
+  - Downloads: alles, was keine Textseite ist, wird in *:Downloads:
+    gespeichert (beliebig gross). Dateityp nach Endung
+    (.shk/.bxy/.zip/.2mg/.gif/.txt/.s16/.sys), sonst $06. Der
+    Speichern-Knopf (Strg-S) legt die aktuelle Seite unveraendert ab.
+  - Favoriten: Stern (Strg-D) merkt die Seite, Liste (Strg-B oder
+    about:fav) zeigt sie; eine davon kann Startseite werden.
+  - Gopher: gopher://rechner/ - Menues, Textdateien, Suchen (Typ 7),
+    Dateien werden gespeichert, GIF (Typ g) angezeigt.
+  - Telnet und IRC: telnet://rechner[:port] (Mailboxen) und
+    irc://rechner[:port]/kanal. Empfangenes laeuft im Fenster mit, die
+    Adresszeile ist die Eingabezeile, Return sendet (eine Adresse wie
+    http://... oder about:start verlaesst die Verbindung). IRC meldet sich
+    selbst an (NICK GS95nnnn), antwortet auf PING und tritt dem Kanal bei;
+    Text geht an den Kanal, /msg nick text, /join #kanal, /nick name,
+    /quit usw. werden als IRC-Befehle geschickt.
+  - HTTPS (https://) mit der CoGS-Karte: die Verschluesselung rechnet die
+    Karte. Mit der Uthernet II geht HTTPS ueber einen Proxy im Heimnetz,
+    der die Verschluesselung uebernimmt (z.B. WebOne oder Macproxy auf
+    einem PC/Raspberry Pi): about:proxy=192.168.1.10:8080 eintippen
+    (about:proxy= schaltet ihn wieder ab).
+  - Tasten: Pfeil hoch/runter und Leertaste blaettern, Pfeil links =
+    zurueck, Strg-R = neu laden, Tippen springt in die Adresszeile, Return
+    laedt, Esc schliesst das Fenster; waehrend des Ladens bricht Esc ab.
+    Zurueck stellt die alte Bildlage wieder her, Neu laden behaelt sie.
+  - Fehlerseiten mit Grund: keine Karte, Name unbekannt, Server lehnt ab,
+    Zeitueberschreitung, HTTP-Fehler, Zertifikat ungueltig.
+  - Namen werden gemerkt (4 Eintraege); antwortet DNS nur ueber TCP, wird
+    UDP danach nicht mehr probiert.
+- Startseite mit Links fuer alte Rechner: FrogFind, 68k.news, die erste
+  Webseite (CERN), textfiles.com, Floodgap (Gopher), Favoriten.
+- Uhrzeit per Internet: Beim ersten Seitenaufruf nach dem Start fragt
+  GS/OS95 mit der Uthernet II einen Zeitserver (pool.ntp.org, SNTP) und
+  stellt die Uhr des IIgs. Vorgabe ist Mitteleuropa (UTC+1 mit
+  Sommerzeit). Andere Zeitzone: about:tz=+1eu (mit EU-Sommerzeit),
+  about:tz=-5us (mit US-Sommerzeit), about:tz=+0 (ohne), about:tz=off
+  schaltet es ab. Zeitzone und Proxy stehen auf der Favoritenseite.
+- Noch nicht: eigenes TLS auf dem IIgs fuer die Uthernet II (dort HTTPS
+  nur ueber einen Proxy), Terminal-Emulation (VT100-Steuerzeichen werden
+  nicht ausgewertet), JPEG/PNG, Bilder neben Text, mehrzeilige Textfelder.
+- Emulator GSSquared (ab 1.0): Uthernet II mit [[cards]] card =
+  "uthernet2". Die Verbindungen laufen dort ueber den Mac; DHCP antwortet
+  nicht, dann gelten die festen Adressen (DNS 1.1.1.1 aus den Vorgaben).
+  Die Uhr folgt dort immer dem Mac. Getestet in GSSquared 1.x: FrogFind,
+  68k.news, textfiles.com (mehrfach hintereinander, mit Bildern),
+  Speichern. GSSquared bis 0.11 verwirft Empfangspakete, wenn der Puffer
+  der Karte voll ist (behoben in 1.0.0, Fehler #172); lange Seiten haben
+  dort Luecken - bitte GSSquared 1.0 oder neuer verwenden.
+- Schnellstartleiste: neues Symbol "Internet", "Desktop anzeigen" ist
+  eins nach rechts gerueckt.
+
+v2.11.0 - Terminal fuer Mailboxen
+- Telnet laeuft jetzt in einem Vollbild-Terminal mit 80 x 25 Zeichen und
+  PC-Zeichensatz (CP437) mit Rahmen- und Blockgrafik, wie ihn
+  ANSI-Mailboxen erwarten. Zwei Darstellungen, Apfel-F wechselt (wird
+  gemerkt; auch about:vt=farbe bzw. about:vt=grau):
+  - Farbe (Vorgabe): 320er-Modus mit den 16 ANSI-Farben, Schrift
+    4 Punkte breit (eigene 4x8-Schrift).
+  - Graustufen: 640er-Modus mit scharfer 8x8-Schrift, Farben als vier
+    Helligkeitsstufen. telnet://rechner[:port] in die Adresszeile
+  eintippen (oder einen telnet://-Link anklicken).
+- ANSI/VT100-Steuerfolgen: Schreibmarke setzen und bewegen, Bildschirm
+  und Zeilen loeschen, Rollbereich, Zeilen und Zeichen einfuegen/loeschen,
+  Schreibmarke merken, Positionsabfrage (viele Mailboxen erkennen ANSI
+  daran), Attribute hell, unterstrichen, invers, Farben.
+- Tasten gehen direkt an die Gegenstelle: Pfeile als ESC [ A..D, Delete
+  als Rueckschritt, Return als CR. Apfel-Esc oder Strg-] beendet die
+  Verbindung und kehrt zum Schreibtisch zurueck. Beendet die Gegenstelle, steht eine
+  Meldung da; eine Taste fuehrt zurueck.
+- Telnet-Aushandlung: GS/OS95 meldet sich als Terminaltyp "ANSI" mit
+  80 x 25 Zeichen (NAWS) und schaltet in den Zeichenmodus.
+- IRC bleibt im Browser-Fenster (Adresszeile als Eingabezeile).
+- Schriften: 8x8-PC-Zeichensatz aus luma.core (MIT-Lizenz), 4x8-Schrift
+  fuer GS/OS95 gezeichnet.
+- Mailbox-Telefonbuch (about:bbs): Liste mit Name, Rechner und Port,
+  Eintraege anlegen, aendern, loeschen (bis zu 8, gespeichert in
+  GSOS95.NET, das dafuer auf 1,5 KB waechst), "Direkt verbinden" mit
+  Rechner und Port. Vorbelegt: Captain's Quarters und Electronic Chicken.
+- Terminal von der Oberflaeche aus: Start > Programme > Terminal und ein
+  neues Symbol in der Schnellstartleiste oeffnen das Telefonbuch.
+- Startbild (Bootbild und Startbild der Oberflaeche) ueberarbeitet:
+  gleichmaessiger Blauverlauf (16 Blautoene, zwischen benachbarten Toenen
+  im 2x2-Raster gemischt: 60 Stufen statt 15 sichtbarer Baender) und
+  die Build-Nummer unter dem Namen ("Build v2.1.26", Datei BUILD).
+  Das Image heisst passend dazu GSOS95_v2126_System.hdv.
+- Favoritenseite: Anzeige der Terminal-Darstellung (Farbe/Graustufen)
+  war verstuemmelt, behoben.
+
+v2.12.0 - Netzwerk fuer alle Karten: Marinetti, FujiNet, WLAN-Modem
+- Einstellungen > Netzwerk hat eine Kartenwahl (Knoepfe - und +):
+  Automatisch, Uthernet II, CoGS, FujiNet, Marinetti, WLAN-Modem.
+  "Automatisch" sucht der Reihe nach: CoGS, FujiNet am SmartPort,
+  Marinetti (wenn schon verbunden), Uthernet II direkt, zuletzt
+  Marinetti mit eigenem Verbindungsaufbau. Die Wahl steht in GSOS95.NET
+  (die Datei waechst auf 2 KB; aeltere Dateien werden weiter gelesen).
+- Marinetti (TCP/IP-Toolset, Systemerweiterung TCPIP): GS/OS95 benutzt
+  Marinettis Verbindung, Namensaufloesung und TCP. Damit laufen alle
+  Karten, fuer die es Link Layer gibt: Uthernet I (CS8900A), LANceGS,
+  Uthernet II, SLIP/PPP ueber Modem, MacIP und die Emulatoren. Ist
+  Marinetti geladen, aber nicht verbunden, baut GS/OS95 die Verbindung
+  selbst auf (TCPIPConnect). Marinetti 3.0b11 ist auf dem Image
+  installiert: TCPIP in *:System:System.Setup, das Kontrollfeld TCP/IP,
+  TOOL054 und die Link Layer in *:System:TCPIP (Uthernet, Uthernet II,
+  CoGS, PPP, PPP.Scripted, SLIP, MacIP, Direct Connect, Sweet16 fuer
+  Emulatoren). Einmal einrichten: Einstellungen > Weitere... >
+  Kontrollfeld "TCP/IP", Link Layer waehlen und "Configure".
+  Wer Marinetti nicht braucht, schiebt TCPIP aus System.Setup heraus.
+- FujiNet am SmartPort (Disk-Anschluss bzw. Slot 5): GS/OS95 sucht das
+  SmartPort-Geraet "NETWORK" und spricht es ueber die SmartPort-Firmware
+  an (FWEntry). http, Gopher, Telnet und IRC laufen als N:TCP://; https
+  verschluesselt die FujiNet selbst (N:HTTPS://, auch Formulare per
+  POST) - ohne Proxy. Namen loest die FujiNet auf.
+- WLAN-Modem an der seriellen Schnittstelle (WiModem232, Zimodem, WiFi232
+  und das virtuelle Modem von GSplus/KEGS): Anschluss 1 (Drucker) oder 2
+  (Modem), 2400 bis 57600 Baud. GS/OS95 waehlt "ATDTrechner:port" und
+  legt mit "+++" / "ATH" auf; das Ende einer Seite erkennt es an
+  "NO CARRIER". https geht ueber einen Proxy. Tipp: Bei hohen Baudraten
+  im Terminal Hardware-Flusskontrolle im Modem einschalten. Der gewaehlte
+  Anschluss darf im Kontrollfeld nicht auf AppleTalk stehen.
+- Netzwerksymbol im Infobereich der Taskleiste (neben der Uhr): blau =
+  verbunden, grau = nicht verbunden. Ein Klick oeffnet Einstellungen >
+  Netzwerk.
+- Neue Seite about:net (Netzwerkstatus): Karte, IP-Adresse, DNS-Server
+  und wie https geht (Karte, Proxy oder "Proxy noetig").
+- Testen im Netzwerk-Dialog meldet je nach Karte: FujiNet bereit,
+  Marinetti verbunden (mit IP), WLAN-Modem antwortet, keine Karte.
+- Intern: vierte Codebank (Netzwerk und Treiber), Treiber mit
+  Faehigkeiten (Name an die Karte, TLS auf der Karte, UDP); die Tests
+  bilden Marinetti, die FujiNet (nach den Quellen der Firmware) und
+  SCC + Hayes-Modem nach. Auf echter Hardware sind FujiNet und WLAN-Modem
+  mit dieser Version noch nicht ausprobiert.
+- Build v2.1.27, Image GSOS95_v2127_System.hdv.
+
+v2.13.0 - Schnelle Runde: Uhrzeit, Proxy, Cookies, Verbindungstest
+- Uhrzeit per Internet jetzt auch mit FujiNet, Marinetti und WLAN-Modem:
+  beim ersten Seitenaufruf fragt GS/OS95 den Time-Dienst von NIST
+  (time.nist.gov, TCP-Port 37, RFC 868) und stellt die Uhr mit der
+  eingestellten Zeitzone (about:tz=...). Die Uthernet II fragt weiter
+  per SNTP.
+- Einstellungen > Netzwerk: neues Feld "HTTPS-Proxy" (rechner:port) fuer
+  alle Karten ohne eigene Verschluesselung (Uthernet II, Marinetti,
+  WLAN-Modem). Der Dialog ist dafuer 20 Punkte hoeher. about:proxy=
+  geht weiter.
+- Cookies: Der Browser merkt sich Set-Cookie (Name=Wert, Domain) fuer die
+  Sitzung und schickt sie an denselben Rechner bzw. bei Domain= auch an
+  Unterdomains zurueck. Anmeldungen, Foren und Suchseiten, die Cookies
+  brauchen, funktionieren damit. Bis zu 16 Cookies, nur im Speicher
+  (nach dem Beenden weg); ein leerer Wert loescht.
+- about:net zeigt jetzt einen Verbindungstest: Aufbau einer Verbindung zu
+  frogfind.com mit der Zeit in Millisekunden.
+- Image mit Marinetti 3.0b11 (siehe v2.12.0), Build v2.1.28,
+  GSOS95_v2128_System.hdv.
+
+v2.14.0 - Explorer, Hilfe, Klaenge, Update-Pruefung
+- Eingabefelder (Adresszeile, Formulare): Pfeil links/rechts bewegen die
+  Schreibmarke, Wahltaste-Pfeil springt wortweise, Apfel-Pfeil und
+  Strg-A/Strg-E an Anfang/Ende; Delete loescht davor, Strg-D (Formulare)
+  dahinter.
+- Explorer: Apfel-Pfeil runter oeffnet, Apfel-Pfeil hoch (und Delete)
+  geht eine Ebene hoeher - der Ordner, aus dem man kommt, bleibt markiert.
+- Papierkorb leeren zeigt jetzt den Fortschritt (Loesche: Name, x von y)
+  und laesst sich mit Esc, Apfel-Punkt oder "Abbrechen" anhalten. Mit
+  gedrueckter Wahltaste geht es ohne Rueckfrage.
+- Objekte auf den Ordner System ziehen: GS/OS95 fragt, ob Kontrollfelder,
+  Schreibtischzubehoer, Schriften, Treiber, Werkzeuge, FSTs und
+  Systemerweiterungen in die passenden Unterordner (CDevs, Desk.Accs,
+  Fonts, Drivers, Tools, FSTs, System.Setup) einsortiert werden sollen.
+  "Nein" legt sie direkt in System ab.
+- Doppelklick auf eine Klangdatei (Typ $D8) spielt sie ab: Systemklaenge
+  (rSoundSample im Ressourcenzweig, z.B. *:System:Sounds), AIFF mit
+  8 Bit mono (Abtastrate aus der Datei) oder Rohdaten mit 11 kHz.
+- Start > Hilfe oeffnet eine Seite mit allen Tastenkuerzeln (about:keys).
+- Das Startmenue blaettert, wenn ein Untermenue mehr als 14 Zeilen hat
+  (Pfeil am Rand; Maus an den Rand oder Pfeiltasten). Programme im
+  Startmenue: jetzt bis zu 12.
+- Update-Pruefung: about:update laedt eine kleine Versionsdatei aus dem
+  GitHub-Repository und meldet, ob es eine neuere Version gibt (mit Link).
+  Adresse einmal eintragen: about:update=https://raw.githubusercontent.com/
+  NAME/REPO/main/GSOS95-VERSION.txt (wird in GSOS95.NET gespeichert).
+  https braucht CoGS/FujiNet oder den HTTPS-Proxy. Link auch auf about:net.
+- Neues Startbild nach dem Entwurf von Daniel (Wolken, Apfel-Fenster-Logo,
+  "GS/OS 95", Marcrosoft), darunter "Created by Marc Golombeck", die
+  Build-Nummer und der Ladebalken. Beim Booten steht zuerst die hellblaue
+  Flaeche mit dem Pixel-Schriftzug "GS/OS 95", Schrift und Balken; sobald GS/OS bereit ist, setzt der kleine
+  Systemzusatz SPLASH95 (System.Setup, gleich nach Tool.Setup) das Bild
+  oben ein - erst die Farben, dann Zeile fuer Zeile, ohne Flackern. Das
+  Bild liegt als *:System:GSOS95.SPL (32 KB, Typ $C1) auf der Platte;
+  GS/OS95 sichert es vor dem Start von QuickDraw und zeigt es danach
+  sofort wieder (nur ein kurzes Schwarz). Ohne die Datei bleibt die Flaeche.
+- Build v2.1.29, GSOS95_v2129_System.hdv.
+
+v2.15.0 - CD-Wiedergabe (Audio-CDs)
+- Start > Programme > CD-Wiedergabe: Audio-CDs ueber ein SCSI-CD-ROM-
+  Laufwerk abspielen (Apple-SCSI-Karte). Anzeige mit Titel, Zeit im Titel,
+  Titellaenge, Gesamtzeit, Zustand und Laufwerksname; Knoepfe Zurueck,
+  Wiedergabe, Pause, Stopp, Weiter, Auswerfen; Titelknoepfe zum direkten
+  Anspringen (Datentitel grau). Tasten: Leertaste Wiedergabe/Pause,
+  Eingabetaste Wiedergabe, Pfeil links/rechts, S Stopp, E Auswerfen,
+  L naechstes Laufwerk, Esc schliesst - die CD spielt weiter.
+- Unterstuetzte Laufwerke: AppleCD SC, CD SC Plus und CD 150 (Apples
+  eigener Audio-Befehlssatz) sowie AppleCD 300/300e/300 Plus/600 und andere
+  SCSI-2-Laufwerke (READ TOC, READ SUB-CHANNEL, PLAY AUDIO MSF,
+  PAUSE/RESUME). GS/OS95 erkennt den Befehlssatz selbst. Der Ton kommt aus
+  der Kopfhoererbuchse bzw. den Audio-Ausgaengen des Laufwerks.
+- Audio-CD einlegen: GS/OS95 oeffnet die CD-Wiedergabe und spielt ab
+  (wie AutoPlay bei Windows 95). Doppelklick auf ein CD-Laufwerk ohne
+  lesbaren Datentraeger im Arbeitsplatz oeffnet sie ebenfalls (statt
+  "Formatieren").
+- Treiber: *:System:Drivers:SCSICD.DRIVER ist jetzt der SCSI-CD-Treiber
+  von Brutal Deluxe (Apples Treiber + SCSI-2-Audiobefehle) in der
+  neuesten Fassung vom August 2026 (von der BlueSCSI-Diskette). Gegenueber
+  der Fassung von 2018 (bd.cdscsi2.v2) ist dort die Befehlsauswertung
+  korrigiert: passt ein Eintrag der Befehlstabelle nicht, wird der naechste
+  mit demselben Befehl versucht (z.B. $1B Start/Stop/Auswerfen, $A5).
+  Die CD-Wiedergabe benutzt ausserdem nur Befehle,
+  die alle Laufwerke kennen (PLAY AUDIO MSF statt Play Track/Index bzw.
+  Play Track Relative, das z.B. auf dem CD300 Plus nicht laeuft), und
+  wiederholt Aufrufe nach "Datentraeger gewechselt" ($2E).
+- Korrekturen im SCSI-CD-Treiber (Build 2.1.31, tools/patch_scsicd.py):
+  Apples Treiber - und damit auch der von Brutal Deluxe - kennt nur die
+  Meldungen der Apple-Laufwerke ($B0 "keine CD"). SCSI-2-Laufwerke wie
+  CD300/CD600 melden "keine CD" mit dem Standardcode $3A. Folgen:
+  1. Nach dem Auswerfen gab der Treiber "E/A-Fehler" statt "offline"
+     zurueck - GS/OS merkte nicht, dass die CD weg ist.
+  2. Nach einem CD-Wechsel oder Reset wartete der Treiber in einer
+     Schleife, bis das Laufwerk bereit ist oder $B0 meldet. Bei leerer
+     oder offener Schublade (Code $3A) endete sie nie - der IIgs hing.
+  Beides ist im Treiber behoben ($3A gilt wie $B0), ohne dass sich
+  Groesse oder Adressen der Datei aendern.
+- GS/OS95 fragt CD-Laufwerke jede Sekunde selbst mit TEST UNIT READY ab,
+  statt sich auf den Status des Treibers zu verlassen (der meldet eine
+  einmal eingelegte CD weiter als "online"). Herausnehmen und Einlegen
+  wird so sicher erkannt; der Arbeitsplatz wird neu eingelesen.
+- Noch nicht auf echter Hardware geprueft (kein Laufwerk vorhanden)!
+- Build v2.1.31, GSOS95_v2131_System.hdv.
+
+v2.16.0 - CD-Titelnamen, mehr Platz
+- CD-Wiedergabe zeigt Kuenstler, Album und Titelnamen aus dem Internet
+  (CDDB ueber HTTP, wie bei vielen CD-Programmen am PC): Taste I oder
+  Klick auf die oberste Zeile der Anzeige. Laeuft das Netzwerk schon,
+  sucht GS/OS95 bei jeder neuen CD von selbst. Die Disc-ID wird aus dem
+  Inhaltsverzeichnis berechnet; fuer dieselbe CD bleiben die Namen
+  gespeichert. Umlaute (Latin-1 und UTF-8) werden umgesetzt.
+- Server: freedb.dbpoweramp.com (Standard). Aendern im
+  Browser: about:cddb=rechner (leer = Standard). gnudb.gnudb.org verlangt
+  eine echte E-Mail-Adresse: about:cddbmail=name@rechner. about:cddb
+  zeigt die Einstellungen (gespeichert in GSOS95.NET).
+- Fenster der CD-Wiedergabe etwas hoeher (vier Anzeigezeilen).
+- Mehr Platz in der Hauptbank (rund 3,6 KB frei statt 70 Bytes):
+  Sperren/Duplizieren/Drucken/Suchen, Fortschrittsanzeige, Pfadlisten und
+  Mehrfachauswahl liegen jetzt in der vierten Codebank.
+- Build v2.1.32, GSOS95_v2132_System.hdv.
+
+v2.17.0 - Fehlerkorrekturen aus System 6.1
+- Die Systemdateien mit den Korrekturen von System 6.1 (Build 22) ersetzen
+  die von 6.0.4: GS.OS, GS.OS.Dev, Start.GS.OS, P8 (2.0.3 mit drei
+  Korrekturen), Error.Msg, Finder; Tool.Setup, TS2, TS3, Resource.Mgr,
+  Sys.Resources; Werkzeuge 14, 15, 16, 18, 20, 23, 27, 28, 34 (Window,
+  Menu, Control Manager, QuickDraw Aux, LineEdit, Standard File, Font,
+  List Manager, TextEdit); Pro.FST; Treiber AppleDisk3.5, AppleDisk5.25,
+  SCSI.Manager, SCSIHD.Driver, Modem, Printer, ImageWriter, ImageWriter.LQ.
+  Darin u.a.: Window Manager verliert keine Fehler mehr nach NewControl2,
+  Font-Manager-Korrektur von 6.0.2 wieder da, Finder liest bei Apfel-Pfeil
+  hoch im Papierkorb nicht mehr ueber seine Daten hinaus, Korrekturen in
+  Lader, Geraeteverwaltung, Umschalten nach ProDOS 8 und den Treibern.
+- Die Erweiterungen von 6.1 sind NICHT uebernommen: keine Looks (die
+  6.1-Werkzeuge sind fest auf "Standard" = Aussehen von 6.0.1 gestellt,
+  das Battery RAM bleibt unangetastet), keine Sprachdateien, kein
+  Phoenix-Startbild, kein Video640, kein Japanisch.
+- Bleiben wie bisher: SCSICD.DRIVER (Brutal Deluxe, mit Korrektur fuer
+  SCSI-2-Laufwerke), HFS.FST 1.04b, die DOS-, RDOS-, Pascal- und
+  High-Sierra-FSTs (6.1 hat korrigierte Fassungen nur auf seinen
+  Extras-Disketten), UniDisk3.5, RAM5, Marinetti.
+- Das GS/OS95-Startbild ist auf die Start.GS.OS von 6.1 umgebaut.
+- Startbild sofort (Build 2.1.34): PRODOS von 6.1 startet vor GS/OS die
+  Datei *:System:Phoenix. Bei GS/OS95 enthaelt sie das Startbild selbst
+  und zeigt es direkt nach dem Einschalten - ohne Warten, ohne Klang.
+  Start.GS.OS loescht den Schirm dann nicht mehr, der Ladebalken laeuft
+  ueber dem Bild.
+- Build 2.1.35: PRODOS startet *:System:Phoenix jetzt immer. Das
+  Original laesst es weg, wenn das Phoenix-Bild im Battery RAM
+  abgeschaltet ist (Kontrollfeld Phoenix von 6.1) oder beim Start eine
+  Taste anliegt - dann kam das Startbild erst spaet ueber SPLASH95.
+- Build 2.1.36: Start.GS.OS laedt das Startbild jetzt zusaetzlich selbst,
+  als allererstes - mit demselben Dateilader, mit dem es danach GS.OS
+  laedt. Hat Phoenix das Bild schon gezeigt, passiert nichts. So
+  erscheint das Bild auch dann vor dem Ladebalken, wenn der Phoenix-Weg
+  von PRODOS nicht laeuft (in GSSquared kam es bisher erst bei etwa
+  50 % des Balkens).
+- Der Ladebalken laeuft nicht mehr in 16 s voll und bleibt dann stehen:
+  er wird langsamer, je voller er ist (40 % nach etwa 6 s, 80 % nach
+  etwa 30 s); den Rest fuellt GS/OS95 beim Starten.
+- Achtung: auf echter Hardware und in GSSquared noch nicht gestartet.
+  Falls etwas nicht startet: GSOS95_v2132_System.hdv ist der letzte Stand
+  mit den Systemdateien von 6.0.4.
+- Build v2.1.36, GSOS95_v2136_System.hdv.
+
+v2.18.0 - Software-Archiv, Dateiuebertragung, Nachrichten
+- Software-Archiv (Start > Programme > Software-Archiv, about:archiv):
+  das Asimov-Archiv (Spiegel mirrors.apple2.org.za) als schlichte Liste -
+  Ordner fett, Dateien darunter, oben ".." fuer den Ordner darueber.
+  Funktioniert mit Apache-, nginx- und eigenen Listen-Seiten. Ein Klick
+  auf eine Datei laedt sie nach *:Downloads; Disk-Images danach mit
+  DiskMaker (Archive.Utils) auf eine Diskette schreiben. Anderer Spiegel:
+  about:archiv=Adresse (about:archiv= stellt die Vorgabe wieder her).
+- Downloads behalten jetzt einen sinnvollen Namen: %20, Leerzeichen,
+  "_" und "-" werden zu Punkten, lange Namen werden auf 15 Zeichen
+  gekuerzt, die Endung bleibt (Lode Runner (1983).dsk -> Lode.Runner.dsk),
+  damit auch der Dateityp (.shk, .zip, .2mg, .txt ...) erkannt wird.
+- Dateiuebertragung im Terminal (Telnet-Mailboxen):
+  ZMODEM-Downloads starten von selbst, sobald die Mailbox sendet
+  (CRC-16 und CRC-32, mehrere Dateien, Name vom Absender).
+  Apfel-D empfaengt mit XMODEM (128 Bytes/1K, CRC oder Pruefsumme) oder
+  YMODEM-Stapel; vorher fragt das Terminal nach einem Namen (leer = vom
+  Absender bzw. DOWNLOAD). Apfel-U sendet eine Datei mit XMODEM-CRC
+  (Name in *:Downloads oder ganzer Pfad). Esc bricht ab. Alles landet in
+  *:Downloads, die Groesse wird laufend in KB angezeigt.
+  Senden per ZMODEM gibt es noch nicht.
+- Nachrichten (Start > Programme > Nachrichten, about:rss): RSS- und
+  Atom-Feeds werden als Seite gezeigt - Name des Feeds, je Meldung Titel,
+  Datum, Text (ohne Bilder, auf 200 Zeichen gekuerzt) und "Weiterlesen".
+  Die Seite about:rss hat einige Feeds (A2Central, Call-A.P.P.L.E.,
+  KansasFest, tagesschau, heise, BBC, Hacker News); jeder andere Feed:
+  Adresse eintippen, mit Strg-D als Favorit merken. Die meisten Feeds
+  sind https: dafuer braucht es CoGS oder FujiNet, sonst einen Proxy.
+- Startmenue aufgeraeumt: Start > Programme zeigt oben die Gruppen
+  Werkzeuge (Rechner, CD-Wiedergabe), Internet (Internet, Terminal,
+  Software-Archiv, Nachrichten) und Spiele (Minesweeper, Solitaer), dann
+  den Arbeitsplatz und die eigenen Programme - alles mit Symbolen. Die
+  Gruppen klappen beim Darueberfahren auf (Tastatur: Pfeil rechts/links).
+- Rechner (Programme > Werkzeuge): Grundrechenarten mit 16 Stellen
+  (angezeigt 12), Prozent, Wurzel, x hoch 2, 1/x, n! (bis 999!), Pi,
+  Vorzeichen, Speicher (MC MR M+ M-), Zurueck, CE, C. Bedienung mit Maus
+  oder Tastatur (Ziffern, + - * /, Return; W Wurzel, Q x hoch 2, R 1/x,
+  ! n!, P Pi, N Vorzeichen); Esc loescht, zweimal Esc schliesst.
+- Solitaer (Programme > Spiele): Klondike wie bei Windows - Karten mit
+  der Maus ziehen, Doppelklick legt auf den Zielstapel, eine oder drei
+  Karten ziehen, Rueckgaengig, Punkte und Zeit (mit Zeitbonus), am Ende
+  die huepfenden Karten. Tasten: N neu, U/Strg-Z rueckgaengig, D 1/3
+  Karten, A alles ablegen, Leertaste Talon, Esc schliesst.
+- Build v2.1.38, GSOS95_v2138_System.hdv (Startmenue, Rechner, Solitaer).
+- Build v2.1.39, GSOS95_v2139_System.hdv: Solitaer - das As laesst sich
+  jetzt per Ziehen und per Doppelklick auf einen leeren Zielstapel legen,
+  beim Ziehen von Stapeln bleiben keine Reste mehr stehen. Die Startseite
+  des Browsers zeigt mehr Seiten, die ohne https laufen (wiby.me,
+  TheOldNet, NeverSSL). Die Nachrichten (about:rss) haben einen neuen
+  Abschnitt "Ohne https": BBC News, Slashdot, OSnews, TechTinkering -
+  noch nicht an echter Hardware geprueft.
+- Build v2.1.40, GSOS95_v2140_System.hdv: MS-DOS-Eingabeaufforderung
+  (Start > Programme > Werkzeuge > MS-DOS, oder about:msdos im Browser).
+  Vollbild wie bei DOS, Laufwerk C: ist das Startvolume. Befehle: DIR,
+  CD (CD .., CD \), TYPE (seitenweise, Esc bricht ab), CLS, COLOR 1E,
+  DATE, TIME, MEM, VER, ECHO, HELP, EXIT; Pfeil hoch holt den letzten
+  Befehl zurueck. Nur lesend: DEL, COPY, FORMAT & Co. aendern nichts.
+- Build v2.1.41, GSOS95_v2141_System.hdv: Startbild mit Wolken bis unten,
+  Schrift und Ladebalken stehen vor den Wolken; ganz unten laeuft es in
+  eine Farbe aus, damit die Symbole der Systemerweiterungen unsichtbar
+  bleiben. Der Ladebalken laeuft beim Wechsel zu GS/OS95 nahtlos weiter.
+- Build v2.1.42, GSOS95_v2142_System.hdv: fuenfte Codebank (64 KB neuer
+  Platz). Darin:
+  * Paint (Start > Programme > Werkzeuge > Paint): Stift, Pinsel, Radierer,
+    Spruehdose, Linie, Rechteck, gefuelltes Rechteck, Fuellen; 16 Farben.
+    S speichert als Bild ($C1) - neue Bilder als *:BILD1, *:BILD2 ...;
+    Z macht rueckgaengig, N neues Bild, Pfeile verschieben den Ausschnitt.
+    Im Bildbetrachter oeffnet B das angezeigte Bild in Paint.
+  * SSH ueber die FujiNet: ssh://benutzer@rechner im Browser, dann das
+    Passwort. Die Karte verschluesselt. Andere Karten koennen kein SSH.
+  * Bildschirmschoner: abwechselnd Linienspiel (neu) und Sternenfeld.
+  * Bluescreen wie bei Windows 95 mit Wahl-Apfel-C ("Chef kommt"); eine
+    Taste holt den Schreibtisch zurueck. Es stuerzt nichts ab.
+  * Die MS-DOS-Eingabeaufforderung liegt jetzt ebenfalls dort.
+- Build v2.1.43, GSOS95_v2143_System.hdv: Paint mit Ellipse, gefuellter
+  Ellipse, Pipette (danach wieder das vorige Werkzeug) und Text (an der
+  Klickstelle tippen, Return oder Klick setzt, Esc bricht ab). Esc fragt bei
+  ungespeichertem Bild erst nach (zweites Esc verwirft). Bluescreen auch mit
+  Strg-Apfel-C (fuer Emulatoren ohne Wahltaste).
+- Build v2.1.44, GSOS95_v2144_System.hdv: Internet-Paket.
+  * MS-DOS-Eingabeaufforderung: PING, NSLOOKUP, IPCONFIG (auch WINIPCFG)
+    und FINGER benutzer@rechner. PING misst den Verbindungsaufbau (TCP 80),
+    weil die Karten kein ICMP koennen.
+  * FTP im Browser: ftp://rechner/pfad/ zeigt das Verzeichnis als Liste mit
+    Links ([Ordner], Datei mit Groesse, [..] eine Ebene hoeher); ein Klick auf
+    eine Datei laedt sie nach *:Downloads. Anmeldung anonym. Geht mit der
+    Uthernet II (zweiter Socket fuer die Daten) und der FujiNet (N:FTP://);
+    andere Karten zeigen einen Hinweis.
+  * Wetter: Start > Programme > Internet > Wetter (about:wetter). Ort
+    eintippen, er wird gemerkt; die Vorhersage kommt von wttr.in.
+  * Lesezeichen mit Ordnern (Strg-D merkt die Seite, about:lz verwaltet,
+    [x] loescht, [Startseite] macht den Eintrag zur Startseite), Verlauf der letzten 20 Seiten (about:verlauf), Suchmaschine
+    waehlbar: FrogFind, wiby.me oder DuckDuckGo. Alte Favoriten werden
+    uebernommen (Datei *:System:GSOS95.LZ).
+  * Bilder aus Webseiten: Strg-P im Browser holt das (erste) Bild der Seite
+    in Paint; dort S zum Speichern.
+- Build v2.1.45, GSOS95_v2145_System.hdv: schnellerer Start. Die
+  Programmdatei SYSTEM:GSOS95 ist von 428 KB auf 278 KB geschrumpft: die
+  rund 23.000 Verschiebe-Eintraege stehen jetzt gepackt (SUPER-Datensaetze,
+  gut 1 Byte statt 7-8 Bytes je Eintrag). Am Programm aendert sich nichts.
+- Build v2.1.47, GSOS95_v2147_System.hdv:
+  * Editor (Start > Programme > Werkzeuge > Editor, Doppelklick auf
+    Textdateien): Texte bis 32000 Zeichen, Umbruch am Fensterrand, Umlaute,
+    Pfeile/Apfel-Pfeile/Wahl-Pfeile, Delete, Strg-D, Mausklick. Apfel-S
+    speichert (neue Texte fragen nach dem Pfad), Esc fragt bei Aenderungen.
+  * Klick auf die Uhr: Datum/Uhrzeit mit Monatskalender und Zifferblatt.
+    Pfeile blaettern, H = heute, "Aendern..." stellt die Uhr.
+  * about:update sucht auf GitHub (8-Bit-Shack/gsos95); die Hilfe nennt
+    jetzt Lesezeichen statt Favoriten.
+- Build v2.1.46, GSOS95_v2146_System.hdv: Korrektur. Mit 2.1.45 fand
+  GS/OS95 unter echtem GS/OS (GSSquared) die Netzwerkkarte nicht mehr
+  (ueberall 0.0.0.0). Ursache ist die gepackte Form der Verschiebe-
+  Eintraege; die Programmdatei steht wieder in der alten Form (428 KB).
+- Keine Spuren von System 6.1 mehr auf dem Image: die Startbild-Datei
+  heisst jetzt *:System:Boot95 statt *:System:Phoenix (PRODOS laedt sie
+  wie bisher gleich nach dem Einschalten; Start.GS.OS laedt das Bild als
+  Rueckfall selbst, falls sie fehlt), und die Meldungen in
+  Finder und Tool.Setup nennen GS/OS95 statt "System 6.1"; der Finder-Tipp
+  spricht vom Startbild statt vom Phoenix-Bild.
+- Build v2.1.37, GSOS95_v2137_System.hdv.

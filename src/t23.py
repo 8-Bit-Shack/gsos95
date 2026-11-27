@@ -1,0 +1,11 @@
+exec(open('t22.py').read().split("render(cpu,'h1.png',3)")[0])
+key(0x15); key(0x15)
+print('SEL2', cpu.mem[ADDR+lbl['SEL2']] if 'SEL2' in lbl else 'dp')
+key(0x18)
+print('Strg+X: clipok', cpu.mem[ADDR+lbl['clipok']])
+key(0x15); key(0x15)
+click(120,26)
+import struct
+print('nach Menue oeffnen')
+click(128,40)
+print('Menue: clipok', cpu.mem[ADDR+lbl['clipok']])

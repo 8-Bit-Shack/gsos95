@@ -1,0 +1,10 @@
+# DHCP an, aber kein DHCP-Server (wie GSSquared): feste Adressen, DNS 1.1.1.1
+exec(open('tw1.py').read().split("# 1) Schnellstart")[0].replace("net = Net()", "net = Net(); net.dhcp = False; net.udp_dns = False"))
+click(101, 193)
+typ('frogfind.com'); key(0x0D)
+ncur = bytes(cpu.mem[ADDR + lbl['NCUR']:ADDR + lbl['NCUR'] + 16])
+print(list(ncur), [x for x in net.log if x[0] in ('udp','dns','connect')][-4:])
+check(ncur == bytes([192,168,1,50,255,255,255,0,192,168,1,1,1,1,1,1]), 'feste Adressen nach DHCP-Ausfall')
+check(('udp', '1.1.1.1', 53, 30) in net.log and ('dnstcp',) in net.log, 'DNS an 1.1.1.1, UDP stumm -> TCP')
+check(bstr(0xFC00) == b'FrogFind!', 'Seite geladen')
+print('OK' if ok else 'FAIL')

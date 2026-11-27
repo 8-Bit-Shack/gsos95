@@ -1,0 +1,61 @@
+Hinweis (GS/OS95-Team): Der Datenverlust bei grossen TCP-Antworten ist in
+GSSquared 1.0.0 behoben (Commit 6fe6106, "fix #172"). Bitte vor dem Melden
+mit GSSquared 1.0 oder neuer pruefen, ob das UDP-Problem unten noch auftritt.
+Zusaetzlich beobachtet (0.11): Nach CLOSE und erneutem OPEN desselben Sockets
+kamen noch Daten/Zustaende der alten Verbindung an. GS/OS95 wartet deshalb
+nach dem Schliessen kurz und verwirft vor der ersten Anfrage alte Daten.
+
+Title: Uthernet II (W5100) emulation: UDP sockets never receive replies (DNS, DHCP); TCP works
+
+GSSquared version: 0.11.1873 (macOS)
+Card: Uthernet II in slot 3
+
+Summary
+-------
+With the emulated Uthernet II, TCP connections work fine (HTTP to port 80,
+and even DNS over TCP to port 53 return correct answers). UDP traffic, however,
+never gets a reply:
+
+1. DHCP: a DHCPDISCOVER is sent from socket 1 in UDP mode (Sn_MR = $02,
+   source port 68, destination 255.255.255.255:67). No DHCPOFFER ever arrives;
+   Sn_RX_RSR stays 0 for the whole timeout (several seconds).
+
+2. DNS over UDP: socket 1 in UDP mode, Sn_DIPR = the DNS server (tested with
+   1.1.1.1, 8.8.8.8 and the router), Sn_DPORT = 53, a standard query is written
+   to the TX buffer and SEND ($20) is issued. No reply is ever received
+   (Sn_RX_RSR stays 0).
+
+The same code works against a W5100 model following the datasheet, and DNS
+over TCP to the same server works inside GSSquared, so I believe the UDP
+path of the emulation (send and/or receive) is not wired to a host socket.
+
+Steps to reproduce
+------------------
+1. Boot GS/OS95 2.10 (or any program that uses UDP on the W5100, e.g. a DHCP
+   or DNS client).
+2. Open the browser and type a host name, e.g. frogfind.com.
+3. The UDP DNS query times out. (GS/OS95 then falls back to DNS over TCP,
+   which works - this is how I confirmed that the network itself is fine.)
+
+Register sequence used (socket 1, UDP)
+--------------------------------------
+  MR    = $03 (indirect bus, auto-increment)
+  RMSR  = $06, TMSR = $06 (socket 0: 4 KB, socket 1: 2 KB)
+  S1_MR = $02 (UDP)
+  S1_PORT = 1024+n
+  S1_CR = $01 (OPEN)            -> S1_SR = $22 (SOCK_UDP)   OK
+  S1_DIPR = DNS server (from the network settings), S1_DPORT = 53
+  write query to TX buffer at $5000 + (S1_TX_WR & $07FF), update S1_TX_WR
+  S1_CR = $20 (SEND)
+  poll S1_RX_RSR                -> always 0                   PROBLEM
+
+Expected: S1_RX_RSR becomes > 0 and the RX buffer at $7000 holds the 8-byte
+UDP header (source IP, source port, length) followed by the DNS answer.
+
+Possibly related: broadcast sends (DHCP) may need SO_BROADCAST on the host
+socket, and receiving on port 68 may need special handling or privileges on
+macOS - a fallback could be to answer DHCP inside the emulator with the host's
+current address settings.
+
+Thank you for GSSquared - apart from this it works very well with GS/OS95's
+browser!

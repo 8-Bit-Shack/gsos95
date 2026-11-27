@@ -1,0 +1,336 @@
+; GS/OS95-Bootbild: ersetzt in START.GS.OS das Zeichnen von Kasten, Symbol
+; und Text (Aufruf ueber JMP bei $75F4). Laeuft in Bank 0 ab $7778.
+.setcpu "65816"
+.smart off
+.a16
+.i16
+; Variablen im nicht mehr benutzten Code des Originals ($760E-$764A)
+CNT = $760E
+POFF = $7610
+ROW = $7612
+COLV = $7614
+SPP = $7616
+SXV = $7618
+SYV = $761A
+CLO = $761C
+CHI = $761E
+W = $7620
+H = $7622
+BPR = $7624
+DPT = $7626
+RR = $7628
+T = $762A
+II = $762C
+BB = $762E
+SCL = $7630
+YY = $7632
+SY2 = $7634
+XX = $7636
+        .segment "CODE"
+start:  jmp main
+; Ladebalken: zwei Schritte pro geladener Datei (Balken ist breiter als im Original)
+step2:  jsr $74F3
+        jmp $74F3
+main:   php
+        phb
+        phk
+        plb
+        rep #$30
+gfx:
+        ; ---- Palette 0 (Balkenzeilen, 640er-Modus) ----
+        ldx #30
+@p0:    lda d_pal0,x
+        sta f:$E19E00,x
+        dex
+        dex
+        bpl @p0
+        ; ---- Paletten 1..15: Grundpalette, Eintrag 12 = Verlauf ----
+        ldy #1
+@pn:    tya
+        asl
+        asl
+        asl
+        asl
+        asl
+        sta POFF
+        ldx #0
+@pc:    lda d_pal,x
+        phx
+        pha
+        txa
+        clc
+        adc POFF
+        tax
+        pla
+        sta f:$E19E00,x
+        plx
+        inx
+        inx
+        cpx #32
+        bcc @pc
+        tya
+        dec a
+        asl
+        tax
+        lda d_grad,x            ; Farbe 12 = Ton p-1, Farbe 13 = Ton p
+        pha
+        lda d_grad+2,x
+        ldx POFF
+        sta f:$E19E00+26,x
+        pla
+        sta f:$E19E00+24,x
+        iny
+        cpy #16
+        bcc @pn
+        ; ---- Paletten 14/15 (unterste Zeilen) einfarbig: die Symbole, die
+        ; Systemerweiterungen dort zeichnen, bleiben unsichtbar ----
+        ldx #30
+@hq:    lda d_grad+26
+        sta f:$E19E00+14*32,x
+        lda d_grad+28
+        sta f:$E19E00+15*32,x
+        dex
+        dex
+        bpl @hq
+        lda d_grad+28           ; Mischfarbe 13 auch dort (Verlauf bleibt stetig)
+        sta f:$E19E00+14*32+26
+        lda d_grad+30
+        sta f:$E19E00+15*32+26
+        ; ---- Zeilen: SCB und Fuellmuster aus Stufe = Zeile*STEP/256 ----
+        ; Palette = Stufe/4+1, Farben 12/13 im 2x2-Raster (Stufe and 3)
+        ldx #0
+        stz ROW
+@fr:    lda ROW
+        cmp #BAR0
+        bcc @g
+        cmp #BAR1+1
+        bcs @g
+        lda #$FFFF              ; Balkenzeilen: 640er-Modus, Wert 3
+        sta COLV
+        lda #$0080
+        bra @s
+@g:     phx
+        ldx #STEP
+        jsr mul
+        xba
+        and #$00FF
+        sta CNT
+        and #3
+        asl
+        sta T
+        lda ROW
+        and #1
+        ora T
+        tay
+        lda d_fillb,y
+        and #$00FF
+        sta T
+        xba
+        ora T
+        sta COLV
+        lda CNT
+        lsr
+        lsr
+        inc a
+        plx
+@s:     phx
+        ldx ROW
+        sep #$20
+        .a8
+        sta f:$E19D00,x
+        rep #$20
+        .a16
+        plx
+        lda COLV
+        ldy #80
+@fw:    sta f:$E12000,x
+        inx
+        inx
+        dey
+        bne @fw
+        inc ROW
+        lda ROW
+        cmp #200
+        bcc @fr
+        ; ---- Logo mit Schatten, Untertitel ----
+        lda #4
+        sta SCL
+        lda #d_logo
+        ldx #LOGO_X+3
+        ldy #63
+        stz COLV
+        jsr blit
+        lda #15
+        sta COLV
+        lda #d_logo
+        ldx #LOGO_X
+        ldy #60
+        jsr blit
+        lda #1
+        sta SCL
+        lda #9
+        sta COLV
+        lda #d_ed
+        ldx #ED_X
+        ldy #98
+        jsr blit
+        lda #15
+        sta COLV
+        lda #d_by
+        ldx #BY_X
+        ldy #114
+        jsr blit
+        lda #14
+        sta COLV
+        lda #d_build
+        ldx #BUILD_X
+        ldy #130
+        jsr blit
+fin:    lda #$00E1
+        sta $02
+        plb
+        plp
+        rts
+
+; 1-Bit-Sprite A an X,Y in Farbe COLV
+blit:   sta SPP
+        stx SXV
+        sty SYV
+        lda COLV
+        sta CLO
+        asl
+        asl
+        asl
+        asl
+        sta CHI
+        ldx SPP
+        lda a:0,x
+        and #$00FF
+        sta W
+        lda a:1,x
+        and #$00FF
+        sta H
+        lda W
+        clc
+        adc #7
+        lsr
+        lsr
+        lsr
+        sta BPR
+        inx
+        inx
+        stx DPT
+        stz RR
+@row:   lda RR
+        ldx SCL
+        jsr mul
+        clc
+        adc SYV
+        sta YY
+        stz SY2
+@sub:   lda YY
+        clc
+        adc SY2
+        asl
+        asl
+        asl
+        asl
+        asl
+        sta T
+        asl
+        asl
+        clc
+        adc T
+        clc
+        adc #$2000
+        sta $00
+        lda #$00E1
+        sta $02
+        stz II
+@col:   lda II
+        lsr
+        lsr
+        lsr
+        clc
+        adc DPT
+        tax
+        lda a:0,x
+        and #$00FF
+        sta BB
+        lda II
+        and #7
+        tax
+        lda BB
+@sh:    cpx #0
+        beq @g
+        asl
+        dex
+        bra @sh
+@g:     and #$0080
+        beq @nx
+        lda II
+        ldx SCL
+        jsr mul
+        clc
+        adc SXV
+        sta XX
+        ldx SCL
+@px:    phx
+        lda XX
+        lsr
+        tay
+        sep #$20
+        .a8
+        bcs @odd
+        lda [$00],y
+        and #$0F
+        ora CHI
+        sta [$00],y
+        bra @d
+@odd:   lda [$00],y
+        and #$F0
+        ora CLO
+        sta [$00],y
+@d:     rep #$20
+        .a16
+        inc XX
+        plx
+        dex
+        bne @px
+@nx:    inc II
+        lda II
+        cmp W
+        bcs *+5
+        jmp @col
+        inc SY2
+        lda SY2
+        cmp SCL
+        bcs *+5
+        jmp @sub
+        lda DPT
+        clc
+        adc BPR
+        sta DPT
+        inc RR
+        lda RR
+        cmp H
+        bcs *+5
+        jmp @row
+        rts
+
+; A * X -> A
+mul:    sta T
+        lda #0
+@m:     cpx #0
+        beq @r
+        clc
+        adc T
+        dex
+        bra @m
+@r:     rts
+
+        .include "data.inc"
+endmark:
+; Build-Zeile im nicht mehr benutzten Code des Originals ($7638-$76BA)
+        .segment "DATA2"
+        .include "data2.inc"

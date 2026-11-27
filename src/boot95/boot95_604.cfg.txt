@@ -1,0 +1,3 @@
+MEMORY { RAM: start=$7778, size=$3F9, file=%O, fill=no;
+         R2: start=$7638, size=$83, file="boot95b.bin", fill=no; }
+SEGMENTS { CODE: load=RAM, type=rw; DATA2: load=R2, type=rw; }

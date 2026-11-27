@@ -1,0 +1,16 @@
+# 2.1.47: Datum/Uhrzeit mit Kalender (Klick auf die Uhr)
+from twbase import *
+import twbase
+cpu = boot(); settle()
+click(300, 193)
+check(w('WIN') == 27, 'Klick auf die Uhr oeffnet Datum/Uhrzeit (WIN %d)' % w('WIN'))
+check((w('CALY'), w('CALM'), w('CTD')) == (2026, 11, 15), 'heute: %d-%d-%d' % (w('CALY'), w('CALM'), w('CTD')))
+render(cpu, 'tcal_1.png', 3)
+key(0x15); check(w('CALM') == 12, 'Pfeil rechts: Dezember')
+key(0x15); check((w('CALY'), w('CALM')) == (2027, 1), 'Januar 2027')
+key(ord('h')); check((w('CALY'), w('CALM')) == (2026, 11), 'H: heute')
+render(cpu, 'tcal_2.png', 3)
+cpu.wr16(cpu.D + 0x54, 1); cpu.events.append((0, 200, 100, 0)); key(0x08); key(0x15)
+render(cpu, 'tcal_en.png', 3); cpu.wr16(cpu.D + 0x54, 0)
+key(0x1B); check(w('WIN') != 27, 'Esc schliesst')
+print('ALLES OK' if twbase.ok else 'FEHLER')

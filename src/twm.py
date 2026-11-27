@@ -1,0 +1,45 @@
+# Marinetti (nachgebildet): automatische Wahl, DNS ueber Marinetti, HTTP, Weiterleitung, Telnet,
+# https ohne TLS -> Hinweis, Marinetti noch nicht verbunden -> TCPIPConnect
+from twbase import *
+import twbase
+from marisim import Marinetti
+mari = Marinetti(net)
+cpu = boot(); cpu.mari = mari
+settle()
+click(101, 193)
+typ('frogfind.com'); key(0x0D)
+check(w('NCARD') == 4, 'Marinetti gewaehlt (NCARD=%d)' % w('NCARD'))
+check(('mdnr', 'frogfind.com') in net.log, 'Name ueber Marinetti aufgeloest')
+check(bstr(0xFC00) == b'FrogFind!' and txt().count(b'Welt') == 400, 'HTTP ueber Marinetti (mehrere Lesestuecke)')
+check(getattr(cpu, 'timeset', None) is not None and len(twbase.TIMEQ) >= 1, 'Uhr per Time-Dienst (TCP 37) gestellt: %r' % (getattr(cpu, 'timeset', None),))
+check(any(x[0] == 'mclose' for x in net.log) and not mari.conns, 'Verbindung geschlossen und abgemeldet')
+typ('frogfind.com/redir'); key(0x0D)
+check(bstr(0xFC00) == b'Zwei', 'Weiterleitung')
+typ('gibtsnicht.test'); key(0x0D)
+check(b'nicht gefunden' in txt(), 'DNS-Fehler ueber Marinetti')
+typ('https://secure.test'); key(0x0D)
+check(b'Proxy' in txt() or b'proxy' in txt(), 'https ohne TLS-Karte: Hinweis auf Proxy')
+typ('telnet://bbs.example'); key(0x0D)
+idle()
+r = ''.join(term_rows())
+check(w('TNON') == 1 and 'Willkommen in der Mailbox' in r, 'Telnet ueber Marinetti')
+for ch in 'gast': key(ord(ch))
+key(0x0D); idle(4)
+check(b''.join(twbase.TIN).startswith(b'gast'), 'Tasten gesendet: %r' % b''.join(twbase.TIN))
+key(0x1B, 0x0100); idle(4)
+check(w('TNON') == 0, 'Telnet beendet')
+render(cpu, 'twm_a.png', 3)
+typ('about:net'); key(0x0D)
+t = txt()
+check(b'Marinetti' in t and b'192.168.1.77' in t and b'10.0.0.53' in t and b'Proxy' in t, 'about:net: %r' % t[:160])
+check(b'frogfind.com: erreichbar in' in t and b' ms' in t, 'Verbindungstest: %r' % t[t.find(b'Verbindungstest'):][:60])
+render(cpu, 'twm_b.png', 3)
+# zweiter Lauf: Marinetti geladen, aber nicht verbunden -> erst nach W5100-Versuch verbinden
+mari2 = Marinetti(net, connected=False)
+cpu = boot(); cpu.mari = mari2
+settle()
+click(101, 193)
+typ('frogfind.com'); key(0x0D)
+check('connect' in mari2.log and w('NCARD') == 4, 'nicht verbunden: TCPIPConnect, dann Marinetti')
+check(bstr(0xFC00) == b'FrogFind!', 'Seite geladen nach Verbindungsaufbau')
+print('ALLES OK' if twbase.ok else 'FAIL Marinetti')
